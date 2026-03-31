@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blackrock Group</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --black: #0a0a0a;
+      --charcoal: #141414;
+      --stone: #1e1e1e;
+      --gold: #b8935a;
+      --gold-light: #d4aa72;
+      --cream: #f0ebe3;
+      --muted: #888;
+      --white: #fafafa;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--cream);
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.6rem 4rem;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+      backdrop-filter: blur(2px);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.9rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.3s, color 0.3s;
+    }
+    .nav-links a:hover { opacity: 1; color: var(--gold); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 0 4rem;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 70% 50%, rgba(184,147,90,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 20% 80%, rgba(184,147,90,0.04) 0%, transparent 50%),
+        linear-gradient(135deg, #0a0a0a 0%, #141414 50%, #0f0f0f 100%);
+    }
+
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(184,147,90,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(184,147,90,0.04) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse 70% 70% at 60% 50%, black 0%, transparent 80%);
+    }
+
+    .hero-content {
+      position: relative; z-index: 1;
+      max-width: 750px;
+      animation: fadeUp 1.2s ease both;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.8rem;
+      opacity: 0;
+      animation: fadeUp 1s 0.3s ease both;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 8vw, 6.5rem);
+      font-weight: 300;
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+      color: var(--white);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 1s 0.5s ease both;
+    }
+
+    .hero-title span { color: var(--gold); font-style: italic; }
+
+    .hero-sub {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--muted);
+      max-width: 460px;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 1s 0.7s ease both;
+    }
+
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 1rem;
+      padding: 1rem 2.2rem;
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.3s, color 0.3s;
+      opacity: 0;
+      animation: fadeUp 1s 0.9s ease both;
+    }
+    .hero-cta:hover { background: var(--gold); color: var(--black); }
+    .hero-cta svg { transition: transform 0.3s; }
+    .hero-cta:hover svg { transform: translateX(4px); }
+
+    .hero-line {
+      position: absolute; right: 4rem; top: 50%;
+      transform: translateY(-50%);
+      width: 1px; height: 200px;
+      background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+      opacity: 0.4;
+    }
+
+    /* ── SECTION BASE ── */
+    section { padding: 8rem 4rem; }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+    }
+
+    .divider {
+      width: 60px; height: 1px;
+      background: var(--gold);
+      margin: 2rem 0;
+      opacity: 0.6;
+    }
+
+    /* ── SERVICES ── */
+    #services { background: var(--charcoal); }
+
+    .services-header { max-width: 500px; margin-bottom: 5rem; }
+    .services-header p { color: var(--muted); line-height: 1.75; }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1px;
+      background: rgba(184,147,90,0.15);
+      border: 1px solid rgba(184,147,90,0.15);
+    }
+
+    .service-card {
+      background: var(--charcoal);
+      padding: 3rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    .service-card:hover { background: var(--stone); }
+    .service-card:hover::before { transform: scaleX(1); }
+
+    .service-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      font-weight: 300;
+      color: rgba(184,147,90,0.2);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+
+    .service-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+
+    .service-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+<!-- AI CREDIT -->
+<div style="text-align:center; padding: 4rem 4rem; color: #b8935a; font-size: 1rem; letter-spacing: 0.2em; text-transform: uppercase; border-top: 1px solid rgba(184,147,90,0.2); border-bottom: 1px solid rgba(184,147,90,0.2);">
+  Project development through the assistance of A I
+</div>    
+    /* ── ABOUT ── */
+    #about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8rem;
+      align-items: center;
+    }
+
+    .about-visual {
+      position: relative;
+      height: 500px;
+    }
+
+    .about-block {
+      position: absolute;
+      background: var(--stone);
+      border: 1px solid rgba(184,147,90,0.2);
+    }
+    .about-block-main {
+      inset: 0 2rem 2rem 0;
+      background: linear-gradient(135deg, var(--stone) 0%, var(--charcoal) 100%);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .about-block-main::after {
+      content: 'B';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18rem;
+      font-weight: 600;
+      color: rgba(184,147,90,0.06);
+      line-height: 1;
+    }
+    .about-block-accent {
+      bottom: 0; right: 0;
+      width: 140px; height: 140px;
+      background: var(--gold);
+      opacity: 0.15;
+    }
+    .about-stat {
+      position: absolute;
+      bottom: 3rem; left: 2.5rem;
+      z-index: 2;
+    }
+    .about-stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .about-stat-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .about-text p {
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 1.2rem;
+      font-size: 0.95rem;
+    }
+
+    .about-values {
+      display: flex; gap: 2.5rem;
+      margin-top: 2.5rem;
+    }
+    .about-value-item { }
+    .about-value-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--gold);
+      margin-bottom: 0.3rem;
+    }
+    .about-value-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--charcoal); }
+
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 8rem;
+      align-items: start;
+    }
+
+    .contact-info p {
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 2.5rem;
+      font-size: 0.95rem;
+    }
+
+    .contact-detail {
+      display: flex; flex-direction: column;
+      gap: 1.2rem;
+    }
+    .contact-detail-item {
+      display: flex; flex-direction: column;
+      gap: 0.2rem;
+    }
+    .contact-detail-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .contact-detail-value {
+      font-size: 0.95rem;
+      color: var(--cream);
+    }
+
+    .contact-form { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+
+    .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+
+    .form-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .form-input, .form-textarea {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(184,147,90,0.25);
+      padding: 0.8rem 0;
+      color: var(--cream);
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 300;
+      outline: none;
+      transition: border-color 0.3s;
+      width: 100%;
+    }
+    .form-input:focus, .form-textarea:focus {
+      border-color: var(--gold);
+    }
+    .form-textarea { resize: none; height: 100px; }
+
+    .form-submit {
+      display: inline-flex; align-items: center; gap: 1rem;
+      padding: 1rem 2.5rem;
+      background: var(--gold);
+      color: var(--black);
+      border: none;
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      align-self: flex-start;
+      transition: background 0.3s, transform 0.2s;
+      font-weight: 500;
+    }
+    .form-submit:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2.5rem 4rem;
+      border-top: 1px solid rgba(184,147,90,0.12);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .footer-copy {
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1.4rem 2rem; }
+      .nav-links { display: none; }
+      #hero { padding: 0 2rem; }
+      section { padding: 5rem 2rem; }
+      #about { grid-template-columns: 1fr; gap: 3rem; }
+      .about-visual { height: 280px; }
+      .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { padding: 2rem; flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">Blackrock Group</div>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Professional Services</p>
+      <h1 class="hero-title">Built on<br><span>trust.</span><br>Driven by results.</h1>
+      <p class="hero-sub">Blackrock Group delivers exceptional service solutions for businesses that demand precision, integrity, and lasting impact.</p>
+      <a href="#contact" class="hero-cta">
+        Get in Touch
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+    <div class="hero-line"></div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="services-header">
+      <p class="section-label">What We Do</p>
+      <h2 class="section-title">Our Services</h2>
+      <div class="divider"></div>
+      <p>We offer a focused range of professional services, each delivered with the same commitment to excellence and client satisfaction.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <div class="service-name">Strategic Consulting</div>
+        <p class="service-desc">Expert guidance to help your business navigate complexity, identify opportunities, and build lasting competitive advantage.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <div class="service-name">Operations Management</div>
+        <p class="service-desc">Streamlining processes and improving efficiency across your operations so you can focus on growing your business.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <div class="service-name">Business Development</div>
+        <p class="service-desc">From market analysis to partnership strategy, we help you identify and capture new growth opportunities.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <div class="service-name">Project Delivery</div>
+        <p class="service-desc">End-to-end project management with a track record of delivering on time, within scope, and to the highest standard.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-visual">
+      <div class="about-block about-block-main"></div>
+      <div class="about-block about-block-accent"></div>
+      <div class="about-stat">
+        <div class="about-stat-num">15+</div>
+        <div class="about-stat-label">Years of Experience</div>
+      </div>
+    </div>
+    <div class="about-text">
+      <p class="section-label">Who We Are</p>
+      <h2 class="section-title">About Blackrock Group</h2>
+      <div class="divider"></div>
+      <p>Blackrock Group is a professional services firm built on a foundation of expertise, integrity, and deep client relationships. We work closely with businesses of all sizes to deliver measurable outcomes.</p>
+      <p>Our team brings together decades of combined experience across industries, giving us the perspective to tackle your most complex challenges with clarity and confidence.</p>
+      <div class="about-values">
+        <div class="about-value-item">
+          <div class="about-value-title">Integrity</div>
+          <div class="about-value-desc">Honest advice, always in your interest.</div>
+        </div>
+        <div class="about-value-item">
+          <div class="about-value-title">Excellence</div>
+          <div class="about-value-desc">High standards in everything we do.</div>
+        </div>
+        <div class="about-value-item">
+          <div class="about-value-title">Partnership</div>
+          <div class="about-value-desc">Your success is our success.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="contact-info">
+        <p class="section-label">Get In Touch</p>
+        <h2 class="section-title">Let's Work Together</h2>
+        <div class="divider"></div>
+        <p>Ready to take the next step? We'd love to hear about your business and explore how Blackrock Group can help you achieve your goals.</p>
+        <div class="contact-detail">
+          <div class="contact-detail-item">
+            <span class="contact-detail-label">Email</span>
+            <span class="contact-detail-value">info@blackrockgroup.com</span>
+          </div>
+          <div class="contact-detail-item">
+            <span class="contact-detail-label">Phone</span>
+            <span class="contact-detail-value">+1 (000) 000-0000</span>
+          </div>
+          <div class="contact-detail-item">
+            <span class="contact-detail-label">Location</span>
+            <span class="contact-detail-value">Available Worldwide</span>
+          </div>
+        </div>
+      </div>
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input class="form-input" type="text" placeholder="John" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input class="form-input" type="text" placeholder="Smith" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input class="form-input" type="email" placeholder="john@company.com" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Company</label>
+          <input class="form-input" type="text" placeholder="Your Company" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message</label>
+          <textarea class="form-textarea" placeholder="Tell us about your project..." required></textarea>
+        </div>
+        <button type="submit" class="form-submit">
+          Send Message
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Blackrock Group</div>
+    <div class="footer-copy">© 2026 Blackrock Group. All rights reserved.</div>
+  </footer>
+
+  <script>
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.form-submit');
+      btn.textContent = 'Message Sent ✓';
+      btn.style.background = '#4a7c59';
+      btn.style.color = '#fff';
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.innerHTML = 'Send Message <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        btn.style.background = '';
+        btn.style.color = '';
+        btn.disabled = false;
+        e.target.reset();
+      }, 3000);
+    }
+  </script>
+
+</body>
+</html>
