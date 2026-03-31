@@ -238,6 +238,46 @@
 <div style="text-align:center; padding: 4rem 4rem; color: #a8a8b0; font-size: 1rem; letter-spacing: 0.2em; text-transform: uppercase; border-top: 1px solid rgba(168,168,176,0.2); border-bottom: 1px solid rgba(168,168,176,0.2);">
   Project development through the assistance of A I
 </div>    
+    /* ── OUR COMPANIES ── */
+    .companies-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .company-card {
+      background: var(--stone);
+      border: 1px solid rgba(168,168,176,0.15);
+      padding: 2.5rem;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .company-card:hover {
+      border-color: rgba(168,168,176,0.4);
+      background: var(--charcoal);
+    }
+
+    .company-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+
+    .company-sector {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+
+    .company-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
     /* ── ABOUT ── */
     #about {
       display: block;
@@ -519,6 +559,7 @@
     <a href="#hero" class="nav-logo" style="text-decoration:none;">Blackrock Group</a>
     <ul class="nav-links">
       <li><a href="#services">Services</a></li>
+      <li><a href="#companies">Our Companies</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -530,6 +571,7 @@
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobileMenu">
     <a href="#services" onclick="toggleMenu()">Services</a>
+    <a href="#companies" onclick="toggleMenu()">Our Companies</a>
     <a href="#about" onclick="toggleMenu()">About</a>
     <a href="#contact" onclick="toggleMenu()">Contact</a>
   </div>
@@ -580,6 +622,28 @@
         <div class="service-num">04</div>
         <div class="service-name">Project Delivery</div>
         <p class="service-desc">End-to-end project management with a track record of delivering on time, within scope, and to the highest standard.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUR COMPANIES -->
+  <section id="companies">
+    <div class="services-header">
+      <p class="section-label">Our Portfolio</p>
+      <h2 class="section-title">Our Companies</h2>
+      <div class="divider"></div>
+      <p>Blackrock Group's operating companies each serve distinct markets, united by shared values and a commitment to excellence.</p>
+    </div>
+    <div class="companies-grid">
+      <div class="company-card">
+        <div class="company-name">BRG Web Design</div>
+        <div class="company-sector">Digital Services</div>
+        <p class="company-desc">We help ambitious businesses — from local SMEs to fast-growing startups — build a digital presence that works as hard as they do. We deliver professional, tailored websites and digital products without the bloat or overhead of a large agency.</p>
+      </div>
+      <div class="company-card">
+        <div class="company-name">BRG Vac Systems</div>
+        <div class="company-sector">Waste & Storage Solutions</div>
+        <p class="company-desc">Founded to provide operators with solutions and offerings aimed at improving waste and refuse handling, as well as extended-duration storage on land and at sea.</p>
       </div>
     </div>
   </section>
