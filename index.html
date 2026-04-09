@@ -656,6 +656,11 @@
       <p>Blackrock Group's operating companies each serve distinct markets, united by shared values and a commitment to excellence.</p>
     </div>
     <div class="companies-grid">
+      <div class="company-card">
+        <div class="company-name">BRG Property Management</div>
+        <div class="company-sector">Property & Real Estate</div>
+        <p class="company-desc">A division focused on tourism, real estate, and digital marketing — including the development and promotion of online platforms for the rental and sale of residential properties.</p>
+      </div>
       <a href="brg-digital.html" class="company-card" style="text-decoration:none; display:block;">
         <div class="company-name">BRG Digital</div>
         <div class="company-sector">Digital Services</div>
@@ -677,20 +682,6 @@
       <div class="divider"></div>
       <p>Blackrock Group is a professional services firm built on a foundation of expertise, integrity, and deep client relationships. We work closely with businesses of all sizes to deliver measurable outcomes.</p>
       <p>Our team brings together decades of combined experience across industries, giving us the perspective to tackle your most complex challenges with clarity and confidence.</p>
-      <div class="about-values">
-        <div class="about-value-item">
-          <div class="about-value-title">Integrity</div>
-          <div class="about-value-desc">Honest advice, always in your interest.</div>
-        </div>
-        <div class="about-value-item">
-          <div class="about-value-title">Excellence</div>
-          <div class="about-value-desc">High standards in everything we do.</div>
-        </div>
-        <div class="about-value-item">
-          <div class="about-value-title">Partnership</div>
-          <div class="about-value-desc">Your success is our success.</div>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -721,24 +712,24 @@
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">First Name</label>
-            <input class="form-input" type="text" placeholder="John" required />
+            <input class="form-input" type="text" name="first_name" placeholder="John" required />
           </div>
           <div class="form-group">
             <label class="form-label">Last Name</label>
-            <input class="form-input" type="text" placeholder="Smith" required />
+            <input class="form-input" type="text" name="last_name" placeholder="Smith" required />
           </div>
         </div>
         <div class="form-group">
           <label class="form-label">Email Address</label>
-          <input class="form-input" type="email" placeholder="john@company.com" required />
+          <input class="form-input" type="email" name="email" placeholder="john@company.com" required />
         </div>
         <div class="form-group">
           <label class="form-label">Company</label>
-          <input class="form-input" type="text" placeholder="Your Company" />
+          <input class="form-input" type="text" name="company" placeholder="Your Company" />
         </div>
         <div class="form-group">
           <label class="form-label">Message</label>
-          <textarea class="form-textarea" placeholder="Tell us about your project..." required></textarea>
+          <textarea class="form-textarea" name="message" placeholder="Tell us about your project..." required></textarea>
         </div>
         <button type="submit" class="form-submit">
           Send Message
@@ -775,20 +766,42 @@
       btn.classList.toggle('open');
     }
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
       e.preventDefault();
       const btn = e.target.querySelector('.form-submit');
-      btn.textContent = 'Message Sent ✓';
-      btn.style.background = '#4a7c59';
-      btn.style.color = '#fff';
+      btn.textContent = 'Sending...';
       btn.disabled = true;
-      setTimeout(() => {
-        btn.innerHTML = 'Send Message <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-        btn.style.background = '';
-        btn.style.color = '';
-        btn.disabled = false;
-        e.target.reset();
-      }, 3000);
+      try {
+        const response = await fetch('https://formspree.io/f/mzdkqovo', {
+          method: 'POST',
+          body: new FormData(e.target),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (response.ok) {
+          btn.textContent = 'Message Sent ✓';
+          btn.style.background = '#4a7c59';
+          btn.style.color = '#fff';
+          e.target.reset();
+          setTimeout(() => {
+            btn.innerHTML = 'Send Message <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+            btn.style.background = '';
+            btn.style.color = '';
+            btn.disabled = false;
+          }, 3000);
+        } else {
+          throw new Error('Failed');
+        }
+      } catch {
+        btn.textContent = 'Something went wrong — try again';
+        btn.style.background = '#7c3a3a';
+        btn.style.color = '#fff';
+        setTimeout(() => {
+          btn.innerHTML = 'Send Message <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+          btn.style.background = '';
+          btn.style.color = '';
+          btn.disabled = false;
+        }, 3000);
+      }
     }
   </script>
 
