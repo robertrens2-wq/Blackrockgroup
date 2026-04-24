@@ -120,6 +120,36 @@
     .pricing-cta--dark { background: var(--gold); color: var(--black); border-color: var(--gold); }
     .pricing-cta--dark:hover { background: #cec090; border-color: #cec090; color: var(--black); }
 
+    /* STARTER WEBSITES */
+    #starter { background: var(--charcoal); }
+    .starter-intro { max-width: 640px; margin-bottom: 4.5rem; }
+    .starter-badge { display: inline-block; font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(184,168,122,0.3); padding: 0.35rem 0.9rem; margin-bottom: 1.2rem; }
+    .starter-setup { display: flex; align-items: flex-end; gap: 1.5rem; margin: 2.8rem 0; padding: 2.5rem 3rem; background: var(--stone); border: 1px solid var(--border); }
+    .starter-setup-price { font-family: 'Cormorant Garamond', serif; font-size: 4rem; font-weight: 300; color: var(--white); line-height: 1; }
+    .starter-setup-label { font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; }
+    .starter-setup-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; max-width: 420px; }
+    .starter-divider { display: flex; align-items: center; gap: 1.5rem; margin: 3rem 0; }
+    .starter-divider-line { flex: 1; height: 1px; background: var(--border); }
+    .starter-divider-text { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+    .starter-plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .starter-plan { background: var(--stone); padding: 3rem 2.5rem; display: flex; flex-direction: column; position: relative; transition: background 0.3s; }
+    .starter-plan:hover { background: #222; }
+    .starter-plan--featured { background: #1e1e1e; }
+    .starter-plan--featured:hover { background: #252525; }
+    .starter-plan-tag { display: inline-block; font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--black); background: var(--gold); padding: 0.28rem 0.75rem; margin-bottom: 1.4rem; align-self: flex-start; }
+    .starter-plan-name { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; color: var(--white); margin-bottom: 0.3rem; }
+    .starter-plan-price { font-family: 'Cormorant Garamond', serif; font-size: 3.2rem; font-weight: 300; color: var(--white); line-height: 1; margin: 1.2rem 0 0.3rem; }
+    .starter-plan-period { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.8rem; padding-bottom: 1.8rem; border-bottom: 1px solid var(--border); }
+    .starter-plan-features { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2.5rem; flex: 1; }
+    .starter-plan-features li { font-size: 0.84rem; color: var(--mid); display: flex; align-items: flex-start; gap: 0.75rem; line-height: 1.4; }
+    .starter-plan-features li::before { content: ''; width: 5px; height: 5px; background: var(--gold); border-radius: 50%; flex-shrink: 0; margin-top: 0.42rem; opacity: 0.7; }
+    .starter-cta { display: inline-flex; align-items: center; gap: 0.7rem; padding: 0.85rem 1.8rem; border: 1px solid rgba(184,168,122,0.5); color: var(--gold); font-family: 'Barlow', sans-serif; font-size: 0.73rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; transition: background 0.25s, color 0.25s; align-self: flex-start; margin-top: auto; }
+    .starter-cta:hover { background: var(--gold); color: var(--black); }
+    .starter-cta svg { transition: transform 0.25s; }
+    .starter-cta:hover svg { transform: translateX(3px); }
+    .starter-cta--dark { background: var(--gold); color: var(--black); border-color: var(--gold); }
+    .starter-cta--dark:hover { background: #cec090; border-color: #cec090; color: var(--black); }
+
     /* PRINCIPLES */
     #principles { background: var(--black); }
     .principles-header { max-width: 560px; margin-bottom: 4.5rem; }
@@ -233,6 +263,8 @@
       .services-header { flex-direction: column; align-items: flex-start; }
       .services-split { grid-template-columns: 1fr; }
       .pricing-grid { grid-template-columns: 1fr; }
+      .starter-plans { grid-template-columns: 1fr; }
+      .starter-setup { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
       .principles-grid { grid-template-columns: repeat(2, 1fr); }
       .process-steps { grid-template-columns: 1fr; }
       .process-step { border-right: none !important; border-top: none !important; border-bottom: 1px solid var(--border); padding: 0 0 2rem 0 !important; margin-bottom: 2rem; }
@@ -261,6 +293,7 @@
     <ul class="nav-links">
       <li><a href="#services">Services</a></li>
       <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#starter">Small Business</a></li>
       <li><a href="#principles">How We Work</a></li>
       <li><a href="#process">Process</a></li>
       <li><a href="#about">About</a></li>
@@ -274,6 +307,7 @@
   <div class="mobile-menu" id="mobileMenu">
     <a href="#services"   onclick="toggleMenu()">Services</a>
     <a href="#pricing"    onclick="toggleMenu()">Pricing</a>
+    <a href="#starter"    onclick="toggleMenu()">Small Business</a>
     <a href="#principles" onclick="toggleMenu()">How We Work</a>
     <a href="#process"    onclick="toggleMenu()">Process</a>
     <a href="#about"      onclick="toggleMenu()">About</a>
@@ -411,6 +445,74 @@
           </div>
         </div>
         <a href="#contact" class="pricing-cta pricing-cta--dark">Get Started <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M3 6.5h7M7 3.5l3 3-3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="starter">
+    <div class="starter-intro">
+      <div class="starter-badge">For Small Businesses</div>
+      <span class="section-eyebrow">Starter Websites</span>
+      <h2 class="section-title">Your first website, done properly</h2>
+      <div class="rule"></div>
+      <p class="section-sub">No existing site? No problem. We get small businesses online fast — with a professional result and a price that makes sense. This is a separate, simpler service from our custom-build offering below.</p>
+    </div>
+
+    <div class="starter-setup">
+      <div>
+        <div class="starter-setup-label">One-off setup fee</div>
+        <div class="starter-setup-price">€299</div>
+      </div>
+      <div class="starter-setup-desc">Your site designed, built, and live under your own domain within 24 hours. Includes everything you need to get started — then choose an annual plan to keep it running.</div>
+    </div>
+
+    <div class="starter-divider">
+      <div class="starter-divider-line"></div>
+      <div class="starter-divider-text">Then choose your annual plan</div>
+      <div class="starter-divider-line"></div>
+    </div>
+
+    <div class="starter-plans">
+
+      <div class="starter-plan">
+        <div class="starter-plan-name">Essential</div>
+        <div class="starter-plan-price">€99</div>
+        <div class="starter-plan-period">per year</div>
+        <ul class="starter-plan-features">
+          <li>Hosting &amp; domain included</li>
+          <li>SSL certificate</li>
+          <li>Security updates</li>
+          <li>Monthly backups</li>
+        </ul>
+        <a href="#contact" class="starter-cta">Get Started <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M3 6.5h7M7 3.5l3 3-3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+
+      <div class="starter-plan starter-plan--featured">
+        <div class="starter-plan-tag">Recommended</div>
+        <div class="starter-plan-name">Professional</div>
+        <div class="starter-plan-price">€199</div>
+        <div class="starter-plan-period">per year</div>
+        <ul class="starter-plan-features">
+          <li>Everything in Essential</li>
+          <li>Content updates (up to 2/month)</li>
+          <li>Performance checks</li>
+          <li>Priority support</li>
+        </ul>
+        <a href="#contact" class="starter-cta starter-cta--dark">Get Started <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M3 6.5h7M7 3.5l3 3-3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+
+      <div class="starter-plan">
+        <div class="starter-plan-name">Premium</div>
+        <div class="starter-plan-price">€299</div>
+        <div class="starter-plan-period">per year</div>
+        <ul class="starter-plan-features">
+          <li>Everything in Professional</li>
+          <li>SEO monitoring</li>
+          <li>Monthly reporting</li>
+          <li>Dedicated account manager</li>
+        </ul>
+        <a href="#contact" class="starter-cta">Get Started <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M3 6.5h7M7 3.5l3 3-3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
 
     </div>
