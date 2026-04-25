@@ -260,6 +260,26 @@
       background: var(--charcoal);
     }
 
+    .company-card--hero {
+      background-image:
+        linear-gradient(to bottom, rgba(5,5,8,0.68) 0%, rgba(5,5,8,0.82) 60%, rgba(5,5,8,0.94) 100%),
+        url('brg-digital-hero.png');
+      background-size: cover;
+      background-position: center;
+      border-color: rgba(184,168,122,0.2);
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      transition: border-color 0.3s, filter 0.4s;
+    }
+    .company-card--hero:hover {
+      background-image:
+        linear-gradient(to bottom, rgba(5,5,8,0.55) 0%, rgba(5,5,8,0.70) 60%, rgba(5,5,8,0.88) 100%),
+        url('brg-digital-hero.png');
+      border-color: rgba(184,168,122,0.5);
+    }
+
     .company-name {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.6rem;
@@ -661,7 +681,7 @@
         <div class="company-sector">Property & Real Estate</div>
         <p class="company-desc">A division focused on tourism, real estate, and digital marketing — including the development and promotion of online platforms for the rental and sale of residential properties.</p>
       </div>
-      <a href="brg-digital.html" class="company-card" style="text-decoration:none; display:block;">
+      <a href="brg-digital.html" class="company-card company-card--hero" style="text-decoration:none; display:block;">
         <div class="company-name">BRG Digital</div>
         <div class="company-sector">Digital Services</div>
         <p class="company-desc">We help ambitious businesses — from local SMEs to fast-growing startups — build a digital presence that works as hard as they do. We deliver professional, tailored websites and digital products without the bloat or overhead of a large agency.</p>
