@@ -337,6 +337,27 @@
       margin: 0 -2.5rem -2.5rem;
     }
 
+    .company-card--property {
+      position: relative;
+      overflow: hidden;
+      border-color: rgba(29,78,216,0.25);
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      transition: border-color 0.3s;
+      background-image: url('brg-property-hero.png');
+      background-size: cover;
+      background-position: center;
+    }
+    .company-card--property:hover { border-color: rgba(59,130,246,0.55); }
+    .company-card--property .card-text {
+      position: relative; z-index: 2;
+      background: rgba(0,0,0,0.82);
+      padding: 1.2rem 1.5rem;
+      margin: 0 -2.5rem -2.5rem;
+    }
+
     .company-name {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.6rem;
@@ -741,10 +762,12 @@
           <p class="company-desc">We help ambitious businesses — from local SMEs to fast-growing startups — build a digital presence that works as hard as they do. We deliver professional, tailored websites and digital products without the bloat or overhead of a large agency.</p>
         </div>
       </a>
-      <div class="company-card">
-        <div class="company-name">BRG Property Solutions</div>
-        <div class="company-sector">Property & Real Estate</div>
-        <p class="company-desc">A division focused on tourism, real estate, and digital marketing — including the development and promotion of online platforms for the rental and sale of residential properties.</p>
+      <div class="company-card company-card--property">
+        <div class="card-text">
+          <div class="company-name">BRG Property Solutions</div>
+          <div class="company-sector">Property & Real Estate</div>
+          <p class="company-desc">A division focused on tourism, real estate, and digital marketing — including the development and promotion of online platforms for the rental and sale of residential properties.</p>
+        </div>
       </div>
     </div>
   </section>
