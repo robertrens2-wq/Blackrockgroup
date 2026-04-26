@@ -1,6 +1,17 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code when working with code in this repository.
+
+## Who You're Working With
+
+Rob is the owner/builder of this project. He's not a developer — always explain things in plain English. Use British spelling throughout (organise, colour, recognise). Warm, direct tone. No jargon, no filler, no preambles. Never delete, send, or publish anything without his explicit confirmation.
+
+## Project History & Memory
+
+Full project history and session notes are kept at:
+`/Desktop/CLAUDE COWORK/Projects/Blackrock Group/memory.md`
+
+Read this file at the start of every session to get up to speed. Update it at the end of the session with what was done and what's next.
 
 ## Project Overview
 
