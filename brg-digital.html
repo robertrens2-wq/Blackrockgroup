@@ -994,5 +994,27 @@
       }
     }
   </script>
+
+  <!-- Back to Top Button -->
+  <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top"
+    style="display:none; position:fixed; bottom:32px; right:28px; z-index:999;
+           width:44px; height:44px; border-radius:50%; border:none; cursor:pointer;
+           background:#4ECDC4; color:#0A0A0A; font-size:20px; line-height:1;
+           box-shadow:0 4px 16px rgba(78,205,196,0.35);
+           transition:opacity 0.3s, transform 0.3s;">
+    &#8679;
+  </button>
+  <script>
+    (function(){
+      var btn = document.getElementById('backToTop');
+      window.addEventListener('scroll', function(){
+        btn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+        btn.style.alignItems = 'center';
+        btn.style.justifyContent = 'center';
+      });
+      btn.addEventListener('mouseenter', function(){ btn.style.transform='scale(1.1)'; });
+      btn.addEventListener('mouseleave', function(){ btn.style.transform='scale(1)'; });
+    })();
+  </script>
 </body>
 </html>
