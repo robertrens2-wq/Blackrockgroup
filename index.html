@@ -315,11 +315,8 @@
     }
 
     .company-card--hero {
-      background-image:
-        linear-gradient(to bottom, rgba(5,5,8,0.30) 0%, rgba(5,5,8,0.60) 55%, rgba(5,5,8,0.88) 100%),
-        url('brg-digital-hero.png');
-      background-size: cover;
-      background-position: center;
+      position: relative;
+      overflow: hidden;
       border-color: rgba(184,168,122,0.2);
       min-height: 260px;
       display: flex;
@@ -327,14 +324,15 @@
       justify-content: flex-end;
       transition: border-color 0.3s;
     }
-    .company-card--hero:hover {
-      background-image:
-        linear-gradient(to bottom, rgba(5,5,8,0.15) 0%, rgba(5,5,8,0.45) 55%, rgba(5,5,8,0.80) 100%),
-        url('brg-digital-hero.png');
-      border-color: rgba(184,168,122,0.5);
+    .company-card--hero:hover { border-color: rgba(184,168,122,0.5); }
+    .company-card--hero canvas {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
     }
     .company-card--hero .card-text {
-      background: rgba(0,0,0,0.85);
+      position: relative; z-index: 2;
+      background: rgba(0,0,0,0.82);
       padding: 1.2rem 1.5rem;
       margin: 0 -2.5rem -2.5rem;
     }
@@ -740,7 +738,8 @@
         <div class="company-sector">Property & Real Estate</div>
         <p class="company-desc">A division focused on tourism, real estate, and digital marketing — including the development and promotion of online platforms for the rental and sale of residential properties.</p>
       </div>
-      <a href="brg-digital.html" class="company-card company-card--hero" style="text-decoration:none; display:block;">
+      <a href="brg-digital.html" id="brgCard" class="company-card company-card--hero" style="text-decoration:none; display:block;">
+        <canvas id="brgCanvas"></canvas>
         <div class="card-text">
           <div class="company-name">BRG Digital</div>
           <div class="company-sector">Digital Services</div>
@@ -837,6 +836,166 @@
     window.addEventListener('scroll', () => {
       document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 300);
     });
+
+    // ── BRG Digital Card — Interactive Tile Canvas ─────────────────
+    (function () {
+      const card   = document.getElementById('brgCard');
+      const canvas = document.getElementById('brgCanvas');
+      const ctx    = canvas.getContext('2d');
+
+      const COLORS = [
+        '#8B00FF','#FF0090','#00BFFF','#7FFF00','#FF4500',
+        '#FF69B4','#00FFD4','#FFD700','#9400D3','#FF6347',
+        '#00FF7F','#FF1493','#1E90FF','#ADFF2F','#FF8C00'
+      ];
+      const ICONS = ['rings','grid','wave','triangle','hexagon',
+                     'lightning','cross','target','bars','diamond','arc'];
+
+      let tiles = [], W, H;
+      let targetX = 0.5, targetY = 0.5;
+      let currentX = 0.5, currentY = 0.5;
+
+      function resize() {
+        W = canvas.width  = card.offsetWidth;
+        H = canvas.height = card.offsetHeight;
+        buildTiles();
+      }
+
+      function buildTiles() {
+        tiles = [];
+        for (let i = 0; i < 42; i++) {
+          const size = 36 + Math.random() * 38;
+          tiles.push({
+            bx:    (Math.random() * (W + 120)) - 60,
+            by:    (Math.random() * (H + 120)) - 60,
+            size,
+            rot:   (Math.random() - 0.5) * 0.4,
+            color: COLORS[Math.floor(Math.random() * COLORS.length)],
+            icon:  ICONS[Math.floor(Math.random() * ICONS.length)],
+            depth: 0.3 + Math.random() * 1.4,
+            alpha: 0.55 + Math.random() * 0.4,
+          });
+        }
+      }
+
+      function rr(x, y, w, h, r) {
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.lineTo(x + w - r, y); ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+        ctx.lineTo(x + w, y + h - r); ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+        ctx.lineTo(x + r, y + h); ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+        ctx.lineTo(x, y + r); ctx.quadraticCurveTo(x, y, x + r, y);
+        ctx.closePath();
+      }
+
+      function drawIcon(type, cx, cy, size) {
+        const s = size * 0.27;
+        ctx.lineWidth = 1.4; ctx.lineCap = 'round';
+        switch (type) {
+          case 'rings':
+            [0.35, 0.65, 1].forEach(f => { ctx.beginPath(); ctx.arc(cx, cy, s * f, 0, Math.PI * 2); ctx.stroke(); });
+            break;
+          case 'grid':
+            for (let gx = -s; gx <= s + 0.1; gx += s * 0.65)
+              for (let gy = -s; gy <= s + 0.1; gy += s * 0.65) {
+                ctx.beginPath(); ctx.arc(cx + gx, cy + gy, 1.8, 0, Math.PI * 2); ctx.fill();
+              }
+            break;
+          case 'wave':
+            for (let pass = 0; pass < 2; pass++) {
+              ctx.beginPath();
+              for (let wx = -s; wx <= s; wx += 2) {
+                const wy = Math.sin((wx / s) * Math.PI * 1.5 + pass * 1.1) * s * 0.45;
+                wx === -s ? ctx.moveTo(cx + wx, cy + wy) : ctx.lineTo(cx + wx, cy + wy);
+              }
+              ctx.stroke();
+            }
+            break;
+          case 'triangle':
+            ctx.beginPath(); ctx.moveTo(cx, cy - s); ctx.lineTo(cx + s, cy + s); ctx.lineTo(cx - s, cy + s); ctx.closePath(); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx, cy + s * 0.3); ctx.lineTo(cx + s * 0.5, cy - s * 0.4); ctx.lineTo(cx - s * 0.5, cy - s * 0.4); ctx.closePath(); ctx.stroke();
+            break;
+          case 'hexagon':
+            ctx.beginPath();
+            for (let a = 0; a < 6; a++) { const ang = a * Math.PI / 3 - Math.PI / 6; a === 0 ? ctx.moveTo(cx + s * Math.cos(ang), cy + s * Math.sin(ang)) : ctx.lineTo(cx + s * Math.cos(ang), cy + s * Math.sin(ang)); }
+            ctx.closePath(); ctx.stroke();
+            break;
+          case 'lightning':
+            ctx.beginPath(); ctx.moveTo(cx + s * 0.2, cy - s); ctx.lineTo(cx - s * 0.1, cy - s * 0.05); ctx.lineTo(cx + s * 0.25, cy - s * 0.05); ctx.lineTo(cx - s * 0.2, cy + s); ctx.stroke();
+            break;
+          case 'cross':
+            [[[-s,0],[s,0]],[[0,-s],[0,s]],[[-s*0.7,-s*0.7],[s*0.7,s*0.7]],[[s*0.7,-s*0.7],[-s*0.7,s*0.7]]].forEach(([a,b]) => {
+              ctx.beginPath(); ctx.moveTo(cx+a[0], cy+a[1]); ctx.lineTo(cx+b[0], cy+b[1]); ctx.stroke();
+            });
+            break;
+          case 'target':
+            ctx.strokeRect(cx - s, cy - s, s * 2, s * 2);
+            ctx.strokeRect(cx - s * 0.55, cy - s * 0.55, s * 1.1, s * 1.1);
+            ctx.beginPath(); ctx.arc(cx, cy, s * 0.2, 0, Math.PI * 2); ctx.fill();
+            break;
+          case 'bars':
+            [-1, 0, 1].forEach((b, i) => {
+              const bh = s * [0.6, 1, 0.75][i];
+              ctx.fillRect(cx + b * s * 0.75 - s * 0.18, cy + s - bh, s * 0.32, bh);
+            });
+            break;
+          case 'diamond':
+            [[s,0.7],[s*0.5,0.35]].forEach(([h,w]) => {
+              ctx.beginPath(); ctx.moveTo(cx, cy-h); ctx.lineTo(cx+h*w, cy); ctx.lineTo(cx, cy+h); ctx.lineTo(cx-h*w, cy); ctx.closePath(); ctx.stroke();
+            });
+            break;
+          case 'arc':
+            [1, 0.6, 0.3].forEach(f => { ctx.beginPath(); ctx.arc(cx, cy, s * f, f === 0.3 ? 0 : -Math.PI * 0.7, f === 0.3 ? Math.PI * 2 : Math.PI * 0.7); ctx.stroke(); });
+            break;
+        }
+      }
+
+      function drawTile(t, ox, oy) {
+        const x = t.bx + ox * t.depth;
+        const y = t.by + oy * t.depth;
+        const s = t.size, r = s * 0.22;
+        const cx = x + s / 2, cy = y + s / 2;
+        ctx.save();
+        ctx.globalAlpha = t.alpha;
+        ctx.translate(cx, cy); ctx.rotate(t.rot); ctx.translate(-cx, -cy);
+        rr(x, y, s, s, r);
+        ctx.fillStyle = t.color + '20'; ctx.fill();
+        ctx.strokeStyle = t.color; ctx.lineWidth = 1.2;
+        rr(x, y, s, s, r); ctx.stroke();
+        ctx.strokeStyle = t.color; ctx.fillStyle = t.color;
+        drawIcon(t.icon, cx, cy, s);
+        ctx.restore();
+      }
+
+      function render() {
+        currentX += (targetX - currentX) * 0.07;
+        currentY += (targetY - currentY) * 0.07;
+        const ox = (currentX - 0.5) * 55;
+        const oy = (currentY - 0.5) * 38;
+
+        ctx.fillStyle = '#050508'; ctx.fillRect(0, 0, W, H);
+        tiles.forEach(t => drawTile(t, ox, oy));
+
+        const g = ctx.createLinearGradient(0, 0, 0, H);
+        g.addColorStop(0,   'rgba(5,5,8,0.22)');
+        g.addColorStop(0.5, 'rgba(5,5,8,0.52)');
+        g.addColorStop(1,   'rgba(5,5,8,0.90)');
+        ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+
+        requestAnimationFrame(render);
+      }
+
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        targetX = (e.clientX - r.left) / r.width;
+        targetY = (e.clientY - r.top)  / r.height;
+      });
+      card.addEventListener('mouseleave', () => { targetX = 0.5; targetY = 0.5; });
+
+      window.addEventListener('resize', resize);
+      resize();
+      render();
+    })();
 
     function toggleMenu() {
       const menu = document.getElementById('mobileMenu');
