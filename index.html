@@ -733,11 +733,6 @@
       <p>Blackrock Group's operating companies each serve distinct markets, united by shared values and a commitment to excellence.</p>
     </div>
     <div class="companies-grid">
-      <div class="company-card">
-        <div class="company-name">BRG Property Solutions</div>
-        <div class="company-sector">Property & Real Estate</div>
-        <p class="company-desc">A division focused on tourism, real estate, and digital marketing — including the development and promotion of online platforms for the rental and sale of residential properties.</p>
-      </div>
       <a href="brg-digital.html" id="brgCard" class="company-card company-card--hero" style="text-decoration:none; display:block;">
         <canvas id="brgCanvas"></canvas>
         <div class="card-text">
@@ -746,6 +741,11 @@
           <p class="company-desc">We help ambitious businesses — from local SMEs to fast-growing startups — build a digital presence that works as hard as they do. We deliver professional, tailored websites and digital products without the bloat or overhead of a large agency.</p>
         </div>
       </a>
+      <div class="company-card">
+        <div class="company-name">BRG Property Solutions</div>
+        <div class="company-sector">Property & Real Estate</div>
+        <p class="company-desc">A division focused on tourism, real estate, and digital marketing — including the development and promotion of online platforms for the rental and sale of residential properties.</p>
+      </div>
     </div>
   </section>
 
@@ -837,7 +837,7 @@
       document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 300);
     });
 
-    // ── BRG Digital Card — Interactive Tile Canvas ─────────────────
+    // ── BRG Digital Card — Bubble Physics Canvas ───────────────────
     (function () {
       const card   = document.getElementById('brgCard');
       const canvas = document.getElementById('brgCanvas');
@@ -846,151 +846,284 @@
       const COLORS = [
         '#8B00FF','#FF0090','#00BFFF','#7FFF00','#FF4500',
         '#FF69B4','#00FFD4','#FFD700','#9400D3','#FF6347',
-        '#00FF7F','#FF1493','#1E90FF','#ADFF2F','#FF8C00'
+        '#00FF7F','#FF1493','#1E90FF','#ADFF2F','#FF8C00',
+        '#DA70D6','#40E0D0','#FF7F50','#7B68EE','#20B2AA',
+        '#F4A460','#87CEEB','#DDA0DD','#98FB98','#F08080'
       ];
       const ICONS = ['rings','grid','wave','triangle','hexagon',
-                     'lightning','cross','target','bars','diamond','arc'];
+                     'lightning','cross','target','bars','diamond',
+                     'arc','spiral','network','brackets','layers'];
 
-      let tiles = [], W, H;
-      let targetX = 0.5, targetY = 0.5;
-      let currentX = 0.5, currentY = 0.5;
+      let bubbles = [], W, H;
+      let mouseX = -999, mouseY = -999, mouseActive = false;
+      let prevMouseX = -999, prevMouseY = -999;
+      let mouseDX = 0, mouseDY = 0;
 
       function resize() {
         W = canvas.width  = card.offsetWidth;
         H = canvas.height = card.offsetHeight;
-        buildTiles();
+        if (!bubbles.length) buildBubbles();
+        else bubbles.forEach(b => {
+          b.x = Math.min(Math.max(b.x, b.r), W - b.r);
+          b.y = Math.min(Math.max(b.y, b.r), H - b.r);
+        });
       }
 
-      function buildTiles() {
-        tiles = [];
-        for (let i = 0; i < 42; i++) {
-          const size = 36 + Math.random() * 38;
-          tiles.push({
-            bx:    (Math.random() * (W + 120)) - 60,
-            by:    (Math.random() * (H + 120)) - 60,
-            size,
-            rot:   (Math.random() - 0.5) * 0.4,
+      function buildBubbles() {
+        bubbles = [];
+        // mix of sizes: many small, some medium, a few large
+        const sizes = [];
+        for (let i = 0; i < 28; i++) sizes.push(14 + Math.random() * 12); // small
+        for (let i = 0; i < 22; i++) sizes.push(26 + Math.random() * 14); // medium
+        for (let i = 0; i < 12; i++) sizes.push(40 + Math.random() * 16); // large
+
+        sizes.forEach(r => {
+          bubbles.push({
+            x: r + Math.random() * Math.max(1, W - r * 2),
+            y: r + Math.random() * Math.max(1, H - r * 2),
+            vx: (Math.random() - 0.5) * 2.4,
+            vy: (Math.random() - 0.5) * 2.4,
+            r,
             color: COLORS[Math.floor(Math.random() * COLORS.length)],
             icon:  ICONS[Math.floor(Math.random() * ICONS.length)],
-            depth: 0.3 + Math.random() * 1.4,
-            alpha: 0.55 + Math.random() * 0.4,
+            wanderAngle: Math.random() * Math.PI * 2,
+            wanderRate:  0.055 + Math.random() * 0.055,
+            alpha: 0.7 + Math.random() * 0.3,
           });
-        }
+        });
       }
 
-      function rr(x, y, w, h, r) {
-        ctx.beginPath();
-        ctx.moveTo(x + r, y);
-        ctx.lineTo(x + w - r, y); ctx.quadraticCurveTo(x + w, y, x + w, y + r);
-        ctx.lineTo(x + w, y + h - r); ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-        ctx.lineTo(x + r, y + h); ctx.quadraticCurveTo(x, y + h, x, y + h - r);
-        ctx.lineTo(x, y + r); ctx.quadraticCurveTo(x, y, x + r, y);
-        ctx.closePath();
-      }
-
-      function drawIcon(type, cx, cy, size) {
-        const s = size * 0.27;
-        ctx.lineWidth = 1.4; ctx.lineCap = 'round';
+      function drawIcon(type, cx, cy, r) {
+        const s = r * 0.48;
+        ctx.lineWidth = Math.max(1, r * 0.055);
+        ctx.lineCap = 'round'; ctx.lineJoin = 'round';
         switch (type) {
           case 'rings':
-            [0.35, 0.65, 1].forEach(f => { ctx.beginPath(); ctx.arc(cx, cy, s * f, 0, Math.PI * 2); ctx.stroke(); });
+            [0.3, 0.6, 1].forEach(f => { ctx.beginPath(); ctx.arc(cx, cy, s * f, 0, Math.PI*2); ctx.stroke(); });
             break;
           case 'grid':
-            for (let gx = -s; gx <= s + 0.1; gx += s * 0.65)
-              for (let gy = -s; gy <= s + 0.1; gy += s * 0.65) {
-                ctx.beginPath(); ctx.arc(cx + gx, cy + gy, 1.8, 0, Math.PI * 2); ctx.fill();
+            for (let gx = -s*.7; gx <= s*.7+.1; gx += s*.7)
+              for (let gy = -s*.7; gy <= s*.7+.1; gy += s*.7) {
+                ctx.beginPath(); ctx.arc(cx+gx, cy+gy, Math.max(1.2, r*0.07), 0, Math.PI*2); ctx.fill();
               }
+            ctx.beginPath(); ctx.arc(cx, cy, Math.max(1.2, r*0.07), 0, Math.PI*2); ctx.fill();
             break;
           case 'wave':
-            for (let pass = 0; pass < 2; pass++) {
+            for (let p = 0; p < 2; p++) {
               ctx.beginPath();
-              for (let wx = -s; wx <= s; wx += 2) {
-                const wy = Math.sin((wx / s) * Math.PI * 1.5 + pass * 1.1) * s * 0.45;
-                wx === -s ? ctx.moveTo(cx + wx, cy + wy) : ctx.lineTo(cx + wx, cy + wy);
+              for (let wx = -s; wx <= s; wx += 1.5) {
+                const wy = Math.sin((wx/s)*Math.PI*1.8 + p*1.2) * s*0.4;
+                wx <= -s+1 ? ctx.moveTo(cx+wx, cy+wy) : ctx.lineTo(cx+wx, cy+wy);
               }
               ctx.stroke();
             }
             break;
           case 'triangle':
-            ctx.beginPath(); ctx.moveTo(cx, cy - s); ctx.lineTo(cx + s, cy + s); ctx.lineTo(cx - s, cy + s); ctx.closePath(); ctx.stroke();
-            ctx.beginPath(); ctx.moveTo(cx, cy + s * 0.3); ctx.lineTo(cx + s * 0.5, cy - s * 0.4); ctx.lineTo(cx - s * 0.5, cy - s * 0.4); ctx.closePath(); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx, cy-s); ctx.lineTo(cx+s*.9, cy+s*.6); ctx.lineTo(cx-s*.9, cy+s*.6); ctx.closePath(); ctx.stroke();
             break;
           case 'hexagon':
             ctx.beginPath();
-            for (let a = 0; a < 6; a++) { const ang = a * Math.PI / 3 - Math.PI / 6; a === 0 ? ctx.moveTo(cx + s * Math.cos(ang), cy + s * Math.sin(ang)) : ctx.lineTo(cx + s * Math.cos(ang), cy + s * Math.sin(ang)); }
+            for (let a = 0; a < 6; a++) {
+              const ang = a*Math.PI/3 - Math.PI/6;
+              a===0 ? ctx.moveTo(cx+s*Math.cos(ang), cy+s*Math.sin(ang)) : ctx.lineTo(cx+s*Math.cos(ang), cy+s*Math.sin(ang));
+            }
             ctx.closePath(); ctx.stroke();
             break;
           case 'lightning':
-            ctx.beginPath(); ctx.moveTo(cx + s * 0.2, cy - s); ctx.lineTo(cx - s * 0.1, cy - s * 0.05); ctx.lineTo(cx + s * 0.25, cy - s * 0.05); ctx.lineTo(cx - s * 0.2, cy + s); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx+s*.25, cy-s); ctx.lineTo(cx-s*.1, cy-.05*s); ctx.lineTo(cx+s*.2, cy-.05*s); ctx.lineTo(cx-s*.25, cy+s); ctx.stroke();
             break;
           case 'cross':
-            [[[-s,0],[s,0]],[[0,-s],[0,s]],[[-s*0.7,-s*0.7],[s*0.7,s*0.7]],[[s*0.7,-s*0.7],[-s*0.7,s*0.7]]].forEach(([a,b]) => {
-              ctx.beginPath(); ctx.moveTo(cx+a[0], cy+a[1]); ctx.lineTo(cx+b[0], cy+b[1]); ctx.stroke();
-            });
+            ctx.beginPath(); ctx.moveTo(cx-s, cy); ctx.lineTo(cx+s, cy); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx, cy-s); ctx.lineTo(cx, cy+s); ctx.stroke();
             break;
           case 'target':
-            ctx.strokeRect(cx - s, cy - s, s * 2, s * 2);
-            ctx.strokeRect(cx - s * 0.55, cy - s * 0.55, s * 1.1, s * 1.1);
-            ctx.beginPath(); ctx.arc(cx, cy, s * 0.2, 0, Math.PI * 2); ctx.fill();
+            ctx.beginPath(); ctx.arc(cx, cy, s, 0, Math.PI*2); ctx.stroke();
+            ctx.beginPath(); ctx.arc(cx, cy, s*.55, 0, Math.PI*2); ctx.stroke();
+            ctx.beginPath(); ctx.arc(cx, cy, s*.18, 0, Math.PI*2); ctx.fill();
             break;
           case 'bars':
-            [-1, 0, 1].forEach((b, i) => {
-              const bh = s * [0.6, 1, 0.75][i];
-              ctx.fillRect(cx + b * s * 0.75 - s * 0.18, cy + s - bh, s * 0.32, bh);
+            [-1,0,1].forEach((b,i) => {
+              const bh = s*[.55,.95,.72][i];
+              ctx.fillRect(cx+b*s*.72-s*.16, cy+s*.5-bh, s*.28, bh);
             });
             break;
           case 'diamond':
-            [[s,0.7],[s*0.5,0.35]].forEach(([h,w]) => {
-              ctx.beginPath(); ctx.moveTo(cx, cy-h); ctx.lineTo(cx+h*w, cy); ctx.lineTo(cx, cy+h); ctx.lineTo(cx-h*w, cy); ctx.closePath(); ctx.stroke();
-            });
+            ctx.beginPath(); ctx.moveTo(cx,cy-s); ctx.lineTo(cx+s*.65,cy); ctx.lineTo(cx,cy+s); ctx.lineTo(cx-s*.65,cy); ctx.closePath(); ctx.stroke();
             break;
           case 'arc':
-            [1, 0.6, 0.3].forEach(f => { ctx.beginPath(); ctx.arc(cx, cy, s * f, f === 0.3 ? 0 : -Math.PI * 0.7, f === 0.3 ? Math.PI * 2 : Math.PI * 0.7); ctx.stroke(); });
+            ctx.beginPath(); ctx.arc(cx, cy, s, -Math.PI*.65, Math.PI*.65); ctx.stroke();
+            ctx.beginPath(); ctx.arc(cx, cy, s*.55, Math.PI*.35, Math.PI*1.65); ctx.stroke();
+            break;
+          case 'spiral':
+            ctx.beginPath();
+            for (let a = 0; a <= Math.PI*3.5; a += 0.12) {
+              const sr = (a/(Math.PI*3.5))*s, px = cx+sr*Math.cos(a), py = cy+sr*Math.sin(a);
+              a===0 ? ctx.moveTo(px,py) : ctx.lineTo(px,py);
+            }
+            ctx.stroke();
+            break;
+          case 'network':
+            const pts = [[-s*.7,-s*.5],[s*.7,-s*.5],[0,s*.7],[0,0]];
+            pts.forEach(([px,py]) => { ctx.beginPath(); ctx.arc(cx+px,cy+py, Math.max(2,r*.08),0,Math.PI*2); ctx.fill(); });
+            [[0,1],[0,3],[1,3],[2,3],[0,2]].forEach(([a,b]) => {
+              ctx.beginPath(); ctx.moveTo(cx+pts[a][0],cy+pts[a][1]); ctx.lineTo(cx+pts[b][0],cy+pts[b][1]); ctx.stroke();
+            });
+            break;
+          case 'brackets':
+            ctx.beginPath(); ctx.moveTo(cx-s*.2,cy-s); ctx.lineTo(cx-s*.6,cy-s); ctx.lineTo(cx-s*.6,cy+s); ctx.lineTo(cx-s*.2,cy+s); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx+s*.2,cy-s); ctx.lineTo(cx+s*.6,cy-s); ctx.lineTo(cx+s*.6,cy+s); ctx.lineTo(cx+s*.2,cy+s); ctx.stroke();
+            break;
+          case 'layers':
+            [-s*.5, 0, s*.5].forEach(oy => {
+              ctx.beginPath(); ctx.moveTo(cx-s*.8,cy+oy); ctx.lineTo(cx,cy+oy-s*.3); ctx.lineTo(cx+s*.8,cy+oy); ctx.stroke();
+            });
             break;
         }
       }
 
-      function drawTile(t, ox, oy) {
-        const x = t.bx + ox * t.depth;
-        const y = t.by + oy * t.depth;
-        const s = t.size, r = s * 0.22;
-        const cx = x + s / 2, cy = y + s / 2;
+      function squirclePath(cx, cy, r) {
+        // iOS squircle: rounded square with ~22% corner radius
+        const s = r * 2, cr = r * 0.44;
+        const x = cx - r, y = cy - r;
+        ctx.beginPath();
+        ctx.moveTo(x + cr, y);
+        ctx.lineTo(x + s - cr, y);
+        ctx.quadraticCurveTo(x + s, y,     x + s, y + cr);
+        ctx.lineTo(x + s, y + s - cr);
+        ctx.quadraticCurveTo(x + s, y + s, x + s - cr, y + s);
+        ctx.lineTo(x + cr, y + s);
+        ctx.quadraticCurveTo(x, y + s,     x, y + s - cr);
+        ctx.lineTo(x, y + cr);
+        ctx.quadraticCurveTo(x, y,         x + cr, y);
+        ctx.closePath();
+      }
+
+      function drawBubble(b) {
+        const { x, y, r, color, icon, alpha } = b;
         ctx.save();
-        ctx.globalAlpha = t.alpha;
-        ctx.translate(cx, cy); ctx.rotate(t.rot); ctx.translate(-cx, -cy);
-        rr(x, y, s, s, r);
-        ctx.fillStyle = t.color + '20'; ctx.fill();
-        ctx.strokeStyle = t.color; ctx.lineWidth = 1.2;
-        rr(x, y, s, s, r); ctx.stroke();
-        ctx.strokeStyle = t.color; ctx.fillStyle = t.color;
-        drawIcon(t.icon, cx, cy, s);
+        ctx.globalAlpha = alpha;
+
+        // subtle drop shadow
+        ctx.shadowColor = 'rgba(0,0,0,0.55)';
+        ctx.shadowBlur  = r * 0.5;
+        ctx.shadowOffsetY = r * 0.12;
+
+        // solid colour fill with vertical gradient
+        squirclePath(x, y, r);
+        const fill = ctx.createLinearGradient(x, y - r, x, y + r);
+        fill.addColorStop(0, color + 'ff');
+        fill.addColorStop(1, color + 'bb');
+        ctx.fillStyle = fill;
+        ctx.fill();
+
+        ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
+
+        // top-left gloss sheen
+        squirclePath(x, y, r);
+        ctx.clip();
+        const sheen = ctx.createRadialGradient(x - r * 0.2, y - r * 0.35, 0, x, y, r * 1.1);
+        sheen.addColorStop(0, 'rgba(255,255,255,0.28)');
+        sheen.addColorStop(0.5, 'rgba(255,255,255,0.05)');
+        sheen.addColorStop(1, 'rgba(0,0,0,0.12)');
+        ctx.fillStyle = sheen;
+        ctx.fill();
+
+        // icon in white
+        ctx.strokeStyle = 'rgba(255,255,255,0.92)';
+        ctx.fillStyle   = 'rgba(255,255,255,0.92)';
+        if (r > 16) drawIcon(icon, x, y, r);
+
         ctx.restore();
       }
 
+      function update() {
+        bubbles.forEach(b => {
+          // organic wander — continuous directional drift
+          b.wanderAngle += (Math.random() - 0.5) * 0.28;
+          b.vx += Math.cos(b.wanderAngle) * b.wanderRate;
+          b.vy += Math.sin(b.wanderAngle) * b.wanderRate;
+
+          // mouse repulsion + directional sweep
+          if (mouseActive) {
+            const dx = b.x - mouseX, dy = b.y - mouseY;
+            const dist = Math.sqrt(dx*dx + dy*dy);
+            const rep = b.r * 9;
+            if (dist < rep && dist > 0.5) {
+              // radial push — stronger the closer the icon is
+              const radialForce = Math.pow((rep - dist) / rep, 1.2) * 7.5;
+              b.vx += (dx/dist) * radialForce;
+              b.vy += (dy/dist) * radialForce;
+              // directional sweep — cursor velocity flings icons in direction of movement
+              const sweepSpeed = Math.sqrt(mouseDX*mouseDX + mouseDY*mouseDY);
+              if (sweepSpeed > 1) {
+                const influence = Math.pow((rep - dist) / rep, 2) * sweepSpeed * 0.55;
+                b.vx += mouseDX * influence;
+                b.vy += mouseDY * influence;
+              }
+            }
+          }
+
+          // bubble-bubble soft separation (using r as half-size for squircle)
+          bubbles.forEach(other => {
+            if (other === b) return;
+            const dx = b.x - other.x, dy = b.y - other.y;
+            const dist = Math.sqrt(dx*dx + dy*dy);
+            const minD = b.r + other.r + 6;
+            if (dist < minD && dist > 0.5) {
+              const push = ((minD - dist) / minD) * 0.4;
+              b.vx += (dx/dist) * push;
+              b.vy += (dy/dist) * push;
+            }
+          });
+
+          // speed cap (larger bubbles move slower, but allow burst speed when hit)
+          const maxSpeed = 7.5 - b.r * 0.06;
+          const speed = Math.sqrt(b.vx*b.vx + b.vy*b.vy);
+          if (speed > maxSpeed) { b.vx = b.vx/speed*maxSpeed; b.vy = b.vy/speed*maxSpeed; }
+
+          // friction — light enough to sustain constant movement
+          b.vx *= 0.991; b.vy *= 0.991;
+
+          b.x += b.vx; b.y += b.vy;
+
+          // edge bounce
+          if (b.x - b.r < 0)    { b.x = b.r;    b.vx *= -0.5; }
+          if (b.x + b.r > W)    { b.x = W-b.r;  b.vx *= -0.5; }
+          if (b.y - b.r < 0)    { b.y = b.r;    b.vy *= -0.5; }
+          if (b.y + b.r > H)    { b.y = H-b.r;  b.vy *= -0.5; }
+        });
+      }
+
       function render() {
-        currentX += (targetX - currentX) * 0.07;
-        currentY += (targetY - currentY) * 0.07;
-        const ox = (currentX - 0.5) * 55;
-        const oy = (currentY - 0.5) * 38;
-
         ctx.fillStyle = '#050508'; ctx.fillRect(0, 0, W, H);
-        tiles.forEach(t => drawTile(t, ox, oy));
+        update();
+        // draw small first, large on top
+        const sorted = [...bubbles].sort((a,b) => a.r - b.r);
+        sorted.forEach(drawBubble);
 
+        // gradient overlay for text readability
         const g = ctx.createLinearGradient(0, 0, 0, H);
-        g.addColorStop(0,   'rgba(5,5,8,0.22)');
-        g.addColorStop(0.5, 'rgba(5,5,8,0.52)');
-        g.addColorStop(1,   'rgba(5,5,8,0.90)');
+        g.addColorStop(0,    'rgba(5,5,8,0.15)');
+        g.addColorStop(0.45, 'rgba(5,5,8,0.42)');
+        g.addColorStop(1,    'rgba(5,5,8,0.88)');
         ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
 
         requestAnimationFrame(render);
       }
 
       card.addEventListener('mousemove', e => {
-        const r = card.getBoundingClientRect();
-        targetX = (e.clientX - r.left) / r.width;
-        targetY = (e.clientY - r.top)  / r.height;
+        const rect = card.getBoundingClientRect();
+        const nx = e.clientX - rect.left;
+        const ny = e.clientY - rect.top;
+        mouseDX = nx - mouseX;
+        mouseDY = ny - mouseY;
+        mouseX = nx; mouseY = ny;
+        mouseActive = true;
       });
-      card.addEventListener('mouseleave', () => { targetX = 0.5; targetY = 0.5; });
+      card.addEventListener('mouseleave', () => {
+        mouseActive = false;
+        mouseDX = 0; mouseDY = 0;
+      });
 
       window.addEventListener('resize', resize);
       resize();
