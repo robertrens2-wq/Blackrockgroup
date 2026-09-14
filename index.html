@@ -3,34 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Blackrock Group | Business Services & Digital Solutions — Johannesburg, South Africa</title>
-  <meta name="description" content="Blackrock Group is a privately held South African holding company based in Johannesburg with interests in digital services, real estate, and consumer goods. Home of BRG Digital." />
-  <meta name="keywords" content="Blackrock Group, business services Johannesburg, digital services South Africa, holding company Johannesburg, BRG Digital, web design South Africa" />
+  <title>Sydro | Web Design & App Development — South Africa & UK</title>
+  <meta name="description" content="Sydro builds professional websites and custom apps for businesses in the UK and South Africa. Starter sites from €299. Bespoke app development scoped individually." />
+  <meta name="keywords" content="Sydro, web design South Africa, app development South Africa, web design UK, website design Johannesburg, app development UK" />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://blackrockgroupsa.com/" />
+  <link rel="canonical" href="/" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://blackrockgroupsa.com/" />
-  <meta property="og:title" content="Blackrock Group | Business Services & Digital Solutions — Johannesburg" />
-  <meta property="og:description" content="Blackrock Group is a privately held South African holding company based in Johannesburg with interests in digital services, real estate, and consumer goods." />
-  <meta property="og:site_name" content="Blackrock Group" />
+  <meta property="og:url" content="/" />
+  <meta property="og:title" content="Sydro | Business Services & Digital Solutions — Johannesburg" />
+  <meta property="og:description" content="Sydro is a privately held South African holding company based in Johannesburg with interests in digital services, real estate, and consumer goods." />
+  <meta property="og:site_name" content="Sydro" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Blackrock Group | Johannesburg, South Africa" />
-  <meta name="twitter:description" content="Blackrock Group is a privately held South African holding company with interests in digital services, real estate, and consumer goods." />
+  <meta name="twitter:title" content="Sydro | Johannesburg, South Africa" />
+  <meta name="twitter:description" content="Sydro is a privately held South African holding company with interests in digital services, real estate, and consumer goods." />
 
   <!-- Structured Data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "Blackrock Group",
-    "legalName": "Blackrock Group PTY LTD",
-    "url": "https://blackrockgroupsa.com",
-    "logo": "https://blackrockgroupsa.com/brg-digital-hero.png",
-    "description": "Blackrock Group is a privately held South African holding company with interests in digital services, real estate, and consumer goods.",
+    "name": "Sydro",
+    "legalName": "Sydro PTY LTD",
+    "url": "/",
+    "description": "Sydro is a digital services company building websites and custom apps for businesses in the United Kingdom and South Africa.",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "85 Sunset Boulevard, Sandton",
@@ -42,7 +41,7 @@
       "@type": "ContactPoint",
       "telephone": "+34-637-246-330",
       "contactType": "customer service",
-      "email": "info@blackrockgroupsa.com"
+      "email": "info@sydro.co.uk"
     },
     "sameAs": [],
     "hasOfferCatalog": {
@@ -52,7 +51,7 @@
         { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Strategic Consulting" } },
         { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Operations Management" } },
         { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Business Development" } },
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Web Design & App Development", "url": "https://blackrockgroupsa.com/brg-digital.html" } }
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Web Design & App Development", "url": "https://sydro.co.uk/services.html" } }
       ]
     }
   }
@@ -578,7 +577,97 @@
     #backToTop.visible { opacity: 1; pointer-events: auto; }
     #backToTop:hover { background: var(--charcoal); }
 
-    /* ── HAMBURGER ── */
+    /* ── REGION SELECTOR ── */
+  #regionOverlay {
+    position: fixed; inset: 0; z-index: 999;
+    background: #0a0a0a;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 2rem;
+  }
+  #regionOverlay.hidden { display: none; }
+
+  .region-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 3.5rem;
+  }
+
+  .region-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+    font-weight: 300;
+    color: var(--white);
+    text-align: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .region-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+
+  .region-cards {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .region-card {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 1.2rem;
+    padding: 2.5rem 3rem;
+    background: var(--charcoal);
+    border: 1px solid rgba(168,168,176,0.18);
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--cream);
+    min-width: 200px;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .region-card:hover {
+    border-color: var(--gold);
+    background: var(--stone);
+  }
+
+  .region-flag { font-size: 3rem; line-height: 1; }
+
+  .region-country {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--white);
+    letter-spacing: 0.05em;
+  }
+
+  .region-domain {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .region-divider {
+    width: 1px; height: 120px;
+    background: rgba(168,168,176,0.15);
+    align-self: center;
+  }
+
+  @media (max-width: 600px) {
+    .region-cards { flex-direction: column; align-items: center; }
+    .region-divider { width: 60px; height: 1px; }
+    .region-card { width: 100%; max-width: 280px; }
+  }
+
+  /* ── HAMBURGER ── */
     .hamburger {
       display: none;
       flex-direction: column;
@@ -657,9 +746,41 @@
 </head>
 <body>
 
+  <!-- REGION SELECTOR -->
+  <div id="regionOverlay">
+    <div class="region-logo">Sydro</div>
+    <h2 class="region-heading">Where are you based?</h2>
+    <p class="region-sub">We'll show you the right information for your region.</p>
+    <div class="region-cards">
+      <a class="region-card" href="https://sydro.co.uk" onclick="setRegion('uk')">
+        <div class="region-flag">🇬🇧</div>
+        <div class="region-country">United Kingdom</div>
+        <div class="region-domain">sydro.co.uk</div>
+      </a>
+      <div class="region-divider"></div>
+      <a class="region-card" href="https://sydro.co.za" onclick="setRegion('za')">
+        <div class="region-flag">🇿🇦</div>
+        <div class="region-country">South Africa</div>
+        <div class="region-domain">sydro.co.za</div>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var chosen = localStorage.getItem('sydro_region');
+      if (chosen) {
+        document.getElementById('regionOverlay').classList.add('hidden');
+      }
+    })();
+    function setRegion(r) {
+      localStorage.setItem('sydro_region', r);
+    }
+  </script>
+
   <!-- NAV -->
   <nav>
-    <a href="#hero" class="nav-logo" style="text-decoration:none;">Blackrock Group</a>
+    <a href="#hero" class="nav-logo" style="text-decoration:none;">Sydro</a>
     <ul class="nav-links">
       <li><a href="#companies">Our Companies</a></li>
       <li><a href="#services">Services</a></li>
@@ -684,9 +805,9 @@
     <div class="hero-bg"></div>
     <div class="hero-grid"></div>
     <div class="hero-content">
-      <p class="hero-eyebrow">Professional Services</p>
-      <h1 class="hero-title">Built on<br><span>trust.</span><br>Driven by results.</h1>
-      <p class="hero-sub">BlackrockGroup is a privately held company with interests in digital services, real estate and consumer goods. Our operating companies share leadership, infrastructure, and a common commitment to integrity, innovation, excellence, and sustainable value creation.</p>
+      <p class="hero-eyebrow">Web Design & App Development</p>
+      <h1 class="hero-title">Websites and apps<br><span>built to work.</span></h1>
+      <p class="hero-sub">Sydro is a digital services company building websites and custom apps for businesses in the UK and South Africa. We do two things well — get businesses online properly, and build the tools that help them run better.</p>
       <a href="#contact" class="hero-cta">
         Get in Touch
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -697,54 +818,44 @@
     <div class="hero-line"></div>
   </section>
 
-  <!-- OUR COMPANIES -->
+  <!-- WHAT WE DO -->
   <section id="companies">
     <div class="services-header">
-      <p class="section-label">Our Portfolio</p>
-      <h2 class="section-title">Our Companies</h2>
+      <p class="section-label">What We Do</p>
+      <h2 class="section-title">Digital services,<br>done properly.</h2>
       <div class="divider"></div>
-      <p>Blackrock Group's operating companies each serve distinct markets, united by shared values and a commitment to excellence.</p>
+      <p>We build websites that get businesses found online, and custom apps that replace the manual processes holding companies back. Based in Johannesburg and the UK — working with clients across both countries.</p>
     </div>
     <div class="companies-grid">
-      <a href="brg-digital.html" target="_blank" rel="noopener noreferrer" id="brgCard" class="company-card company-card--hero" style="text-decoration:none; display:block;">
+      <a href="services.html" target="_blank" rel="noopener noreferrer" id="brgCard" class="company-card company-card--hero" style="text-decoration:none; display:block;">
         <canvas id="brgCanvas"></canvas>
         <div class="card-text">
-          <div class="company-name">BRG Digital</div>
-          <div class="company-sector">Digital Services</div>
-          <p class="company-desc">We help ambitious businesses — from local SMEs to fast-growing startups — build a digital presence that works as hard as they do. We deliver professional, tailored websites and digital products without the bloat or overhead of a large agency.</p>
+          <div class="company-name">Sydro</div>
+          <div class="company-sector">Web Design & App Development</div>
+          <p class="company-desc">Professional websites for small businesses. Bespoke apps for companies that need proper digital tools. Two services. No filler. Registered in the United Kingdom and South Africa.</p>
         </div>
       </a>
-      <div class="company-card">
-        <div class="company-name">BRG Property Solutions</div>
-        <div class="company-sector">Property & Real Estate</div>
-        <p class="company-desc">A division focused on tourism, real estate, and digital marketing — including the development and promotion of online platforms for the rental and sale of residential properties.</p>
-      </div>
     </div>
   </section>
 
   <!-- SERVICES -->
   <section id="services">
     <div class="services-header">
-      <p class="section-label">What We Do</p>
-      <h2 class="section-title">Our Services</h2>
+      <p class="section-label">Services</p>
+      <h2 class="section-title">Two services.<br>No filler.</h2>
       <div class="divider"></div>
-      <p>We offer a focused range of professional services, each delivered with the same commitment to client satisfaction.</p>
+      <p>We keep our focus narrow so we can do each thing exceptionally well.</p>
     </div>
     <div class="services-grid">
       <div class="service-card">
         <div class="service-num">01</div>
-        <div class="service-name">Strategic Consulting</div>
-        <p class="service-desc">Expert guidance to help your business navigate complexity, identify opportunities, and build lasting competitive advantage.</p>
+        <div class="service-name">Website Design & Build</div>
+        <p class="service-desc">Professional, fast, SEO-ready websites for businesses that need to be found online. From starter sites live within 24 hours, to fully custom builds. South Africa and UK.</p>
       </div>
       <div class="service-card">
         <div class="service-num">02</div>
-        <div class="service-name">Operations Management</div>
-        <p class="service-desc">Streamlining processes and improving efficiency across your operations so you can focus on growing your business.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-num">03</div>
-        <div class="service-name">Business Development</div>
-        <p class="service-desc">From market analysis to partnership strategy, we help you identify and capture new growth opportunities.</p>
+        <div class="service-name">Bespoke App Development</div>
+        <p class="service-desc">Custom web and mobile apps for businesses managing jobs, bookings, staff, or workflows manually. We build the digital tools that replace the chaos — scoped and priced individually.</p>
       </div>
     </div>
   </section>
@@ -753,10 +864,10 @@
   <section id="about">
     <div class="about-text">
       <p class="section-label">Who We Are</p>
-      <h2 class="section-title">About Blackrock Group</h2>
+      <h2 class="section-title">About Sydro</h2>
       <div class="divider"></div>
-      <p>Blackrock Group is a professional services firm built on a foundation of expertise, integrity, and deep client relationships. We work closely with businesses of all sizes to deliver measurable outcomes.</p>
-      <p>Our team brings together decades of combined experience across industries, giving us the perspective to tackle your most complex challenges with clarity and confidence.</p>
+      <p>Sydro is a digital services company registered in the United Kingdom and South Africa. We build websites and custom apps for businesses that want to operate properly online.</p>
+      <p>We work with small businesses getting online for the first time, and with established companies that need proper software to replace the spreadsheets and manual processes holding them back. Two countries, one focused team.</p>
     </div>
   </section>
 
@@ -767,11 +878,11 @@
         <p class="section-label">Get In Touch</p>
         <h2 class="section-title">Let's Work Together</h2>
         <div class="divider"></div>
-        <p>Ready to take the next step? We'd love to hear about your business and explore how Blackrock Group can help you achieve your goals.</p>
+        <p>Tell us what you're trying to build or fix. We'll come back with a straightforward view on whether we can help and what it would look like.</p>
         <div class="contact-detail">
           <div class="contact-detail-item">
             <span class="contact-detail-label">Email</span>
-            <a href="mailto:info@blackrockgroupsa.com" class="contact-detail-value" style="color:inherit;text-decoration:none;">info@blackrockgroupsa.com</a>
+            <a href="mailto:info@sydro.co.uk" class="contact-detail-value" style="color:inherit;text-decoration:none;">info@sydro.co.uk</a>
           </div>
           <div class="contact-detail-item">
             <span class="contact-detail-label">WhatsApp</span>
@@ -828,9 +939,9 @@
 
   <!-- FOOTER -->
   <footer>
-    <div class="footer-logo">Blackrock Group</div>
+    <div class="footer-logo">Sydro</div>
     <div class="footer-copy">Reg. No. K2015133182</div>
-    <div class="footer-copy">© 2026 Blackrock Group. All rights reserved.</div>
+    <div class="footer-copy">© 2026 Sydro. All rights reserved.</div>
   </footer>
 
   <script>
