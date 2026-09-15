@@ -293,11 +293,14 @@
       align-items: flex-start;
       background: var(--stone);
       border: 1px solid rgba(168,168,176,0.12);
+      border-left: 3px solid rgba(168,168,176,0.12);
       padding: 1.75rem;
       border-radius: 4px;
       transition: border-color 0.3s;
     }
     .portfolio-card:hover { border-color: rgba(168,168,176,0.35); }
+    .portfolio-card--dev { border-left-color: #f97316; }
+    .portfolio-card--live { border-left-color: #22c55e; }
     .portfolio-icon {
       flex-shrink: 0;
       width: 64px; height: 64px;
@@ -838,7 +841,7 @@
     </div>
     <div class="portfolio-grid">
 
-      <div class="portfolio-card">
+      <div class="portfolio-card portfolio-card--dev">
         <div class="portfolio-icon"><img src="crewlink-icon.png" alt="Crewlink"></div>
         <div class="portfolio-info">
           <div class="portfolio-name">Crewlink</div>
@@ -847,7 +850,7 @@
         </div>
       </div>
 
-      <a class="portfolio-card" href="https://crewcount.co.uk" target="_blank" rel="noopener noreferrer" style="text-decoration:none;color:inherit;">
+      <a class="portfolio-card portfolio-card--live" href="https://crewcount.co.uk" target="_blank" rel="noopener noreferrer" style="text-decoration:none;color:inherit;">
         <div class="portfolio-icon"><img src="crewcount-icon.svg" alt="Crewcount"></div>
         <div class="portfolio-info">
           <div class="portfolio-name">Crewcount</div>
@@ -856,7 +859,7 @@
         </div>
       </a>
 
-      <div class="portfolio-card">
+      <div class="portfolio-card portfolio-card--dev">
         <div class="portfolio-icon"><img src="ANCHOR.png" alt="Anchor"></div>
         <div class="portfolio-info">
           <div class="portfolio-name">Anchor</div>
@@ -865,7 +868,7 @@
         </div>
       </div>
 
-      <div class="portfolio-card">
+      <div class="portfolio-card portfolio-card--dev">
         <div class="portfolio-icon"><img src="GOLD WATCH.png" alt="Gold Watch"></div>
         <div class="portfolio-info">
           <div class="portfolio-name">Gold Watch</div>
