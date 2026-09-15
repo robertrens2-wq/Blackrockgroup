@@ -596,6 +596,34 @@
   }
   #regionOverlay.hidden { display: none; }
 
+  #zaComingSoon {
+    position: fixed; inset: 0; z-index: 1000;
+    background: #0a0a0a;
+    display: none;
+    flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 2rem;
+    text-align: center;
+  }
+  #zaComingSoon.visible { display: flex; }
+  .za-flag { font-size: 4rem; margin-bottom: 1.5rem; }
+  .za-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem; font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+  .za-sub {
+    color: #888; font-size: 1rem;
+    max-width: 360px; line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+  .za-countdown {
+    font-size: 0.85rem; color: #555;
+    letter-spacing: 0.1em;
+  }
+
   .region-logo {
     font-family: 'Cormorant Garamond', serif;
     font-size: 2rem;
@@ -756,6 +784,14 @@
 <body>
 
   <!-- REGION SELECTOR -->
+  <!-- South Africa coming soon screen -->
+  <div id="zaComingSoon">
+    <div class="za-flag">🇿🇦</div>
+    <div class="za-heading">Coming Soon</div>
+    <p class="za-sub">We're working on our South African site. In the meantime, take a look at what we do on our UK site.</p>
+    <div class="za-countdown">Redirecting to sydro.co.uk in <span id="zaTimer">5</span>s…</div>
+  </div>
+
   <div id="regionOverlay">
     <div class="region-logo">Sydro</div>
     <h2 class="region-heading">Where are you based?</h2>
@@ -785,7 +821,21 @@
     function chooseRegion(r) {
       localStorage.setItem('sydro_region', r);
       if (r === 'za') {
-        window.location.href = 'https://sydro.co.za';
+        document.getElementById('regionOverlay').classList.add('hidden');
+        var screen = document.getElementById('zaComingSoon');
+        screen.classList.add('visible');
+        var secs = 5;
+        var timerEl = document.getElementById('zaTimer');
+        var interval = setInterval(function() {
+          secs--;
+          timerEl.textContent = secs;
+          if (secs <= 0) {
+            clearInterval(interval);
+            localStorage.setItem('sydro_region', 'uk');
+            screen.classList.remove('visible');
+            document.getElementById('regionOverlay').classList.add('hidden');
+          }
+        }, 1000);
       } else {
         document.getElementById('regionOverlay').classList.add('hidden');
       }
