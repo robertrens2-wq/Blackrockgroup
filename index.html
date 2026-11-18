@@ -13,13 +13,13 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="/" />
   <meta property="og:title" content="Sydro | Web Design & App Development — London & Cape Town" />
-  <meta property="og:description" content="Sydro is a digital services company building websites and custom apps for businesses in the United Kingdom and South Africa. Based in London and Cape Town." />
+  <meta property="og:description" content="Sydro is a digital services company building websites and custom apps for businesses in the United Kingdom and South Africa. Based in London, with our sister company Sydro Africa in Cape Town." />
   <meta property="og:site_name" content="Sydro" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Sydro | Web Design & App Development" />
-  <meta name="twitter:description" content="Professional websites and bespoke apps for businesses in the UK and South Africa. Based in London and Cape Town." />
+  <meta name="twitter:description" content="Professional websites and bespoke apps for businesses in the UK and South Africa. Based in London, with our sister company Sydro Africa in Cape Town." />
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -588,125 +588,7 @@
     #backToTop.visible { opacity: 1; pointer-events: auto; }
     #backToTop:hover { background: var(--charcoal); }
 
-    /* ── REGION SELECTOR ── */
-  #regionOverlay {
-    position: fixed; inset: 0; z-index: 999;
-    background: #0a0a0a;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    padding: 2rem;
-  }
-  #regionOverlay.hidden { display: none; }
-
-  #zaComingSoon {
-    position: fixed; inset: 0; z-index: 1000;
-    background: #0a0a0a;
-    display: none;
-    flex-direction: column;
-    align-items: center; justify-content: center;
-    padding: 2rem;
-    text-align: center;
-  }
-  #zaComingSoon.visible { display: flex; }
-  .za-flag { font-size: 4rem; margin-bottom: 1.5rem; }
-  .za-heading {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.5rem; font-weight: 600;
-    color: var(--gold);
-    letter-spacing: 0.1em;
-    margin-bottom: 1rem;
-  }
-  .za-sub {
-    color: #888; font-size: 1rem;
-    max-width: 360px; line-height: 1.6;
-    margin-bottom: 2rem;
-  }
-  .za-countdown {
-    font-size: 0.85rem; color: #555;
-    letter-spacing: 0.1em;
-  }
-
-  .region-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2rem;
-    font-weight: 600;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 3.5rem;
-  }
-
-  .region-heading {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.6rem, 4vw, 2.6rem);
-    font-weight: 300;
-    color: var(--white);
-    text-align: center;
-    margin-bottom: 0.75rem;
-  }
-
-  .region-sub {
-    font-size: 0.85rem;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-    text-align: center;
-    margin-bottom: 3.5rem;
-  }
-
-  .region-cards {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .region-card {
-    display: flex; flex-direction: column; align-items: center;
-    gap: 1.2rem;
-    padding: 2.5rem 3rem;
-    background: var(--charcoal);
-    border: 1px solid rgba(168,168,176,0.18);
-    cursor: pointer;
-    text-decoration: none;
-    color: var(--cream);
-    min-width: 200px;
-    transition: border-color 0.3s, background 0.3s;
-  }
-  .region-card:hover {
-    border-color: var(--gold);
-    background: var(--stone);
-  }
-
-  .region-flag { font-size: 3rem; line-height: 1; }
-
-  .region-country {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.4rem;
-    font-weight: 400;
-    color: var(--white);
-    letter-spacing: 0.05em;
-  }
-
-  .region-domain {
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  .region-divider {
-    width: 1px; height: 120px;
-    background: rgba(168,168,176,0.15);
-    align-self: center;
-  }
-
-  @media (max-width: 600px) {
-    .region-cards { flex-direction: column; align-items: center; }
-    .region-divider { width: 60px; height: 1px; }
-    .region-card { width: 100%; max-width: 280px; }
-  }
-
-  /* ── HAMBURGER ── */
+    /* ── HAMBURGER ── */
     .hamburger {
       display: none;
       flex-direction: column;
@@ -785,63 +667,9 @@
 </head>
 <body>
 
-  <!-- REGION SELECTOR -->
-  <!-- South Africa coming soon screen -->
-  <div id="zaComingSoon">
-    <div class="za-flag">🇿🇦</div>
-    <div class="za-heading">Coming Soon</div>
-    <p class="za-sub">We're working on our South African site. In the meantime, take a look at what we do on our UK site.</p>
-    <div class="za-countdown">Redirecting to sydro.co.uk in <span id="zaTimer">5</span>s…</div>
-  </div>
-
-  <div id="regionOverlay">
-    <div class="region-logo">Sydro</div>
-    <h2 class="region-heading">Where are you based?</h2>
-    <p class="region-sub">We'll show you the right information for your region.</p>
-    <div class="region-cards">
-      <div class="region-card" onclick="chooseRegion('uk')">
-        <div class="region-flag">🇬🇧</div>
-        <div class="region-country">United Kingdom</div>
-        <div class="region-domain">sydro.co.uk</div>
-      </div>
-      <div class="region-divider"></div>
-      <div class="region-card" onclick="chooseRegion('za')">
-        <div class="region-flag">🇿🇦</div>
-        <div class="region-country">South Africa</div>
-        <div class="region-domain">sydro.co.za</div>
-      </div>
-    </div>
-  </div>
-
   <script>
-    (function () {
-      var chosen = localStorage.getItem('sydro_region');
-      if (chosen) {
-        document.getElementById('regionOverlay').classList.add('hidden');
-      }
-    })();
-    function chooseRegion(r) {
-      localStorage.setItem('sydro_region', r);
-      if (r === 'za') {
-        document.getElementById('regionOverlay').classList.add('hidden');
-        var screen = document.getElementById('zaComingSoon');
-        screen.classList.add('visible');
-        var secs = 5;
-        var timerEl = document.getElementById('zaTimer');
-        var interval = setInterval(function() {
-          secs--;
-          timerEl.textContent = secs;
-          if (secs <= 0) {
-            clearInterval(interval);
-            localStorage.setItem('sydro_region', 'uk');
-            screen.classList.remove('visible');
-            document.getElementById('regionOverlay').classList.add('hidden');
-          }
-        }, 1000);
-      } else {
-        document.getElementById('regionOverlay').classList.add('hidden');
-      }
-    }
+    // The old region chooser has been removed: tidy away the preference it saved in visitors' browsers
+    try { localStorage.removeItem('sydro_region'); } catch (e) {}
   </script>
 
   <!-- NAV -->
@@ -876,7 +704,7 @@
     <div class="hero-content">
       <p class="hero-eyebrow">Anchoring Your Ideas</p>
       <h1 class="hero-title">Websites and apps<br><span>built to work.</span></h1>
-      <p class="hero-sub">Sydro is a digital agency with offices in London and Cape Town, built around one idea: that AI has made it possible to build better software, faster, and for less. We use it to turn your ideas into real products — websites that get you found, and apps that do the work your spreadsheets can't.</p>
+      <p class="hero-sub">Sydro is a digital agency based in London, with our sister company, Sydro Africa, in Cape Town, and built around one idea: that AI has made it possible to build better software, faster, and for less. We use it to turn your ideas into real products — websites that get you found, and apps that do the work your spreadsheets can't.</p>
       <a href="#contact" class="hero-cta">
         Get in Touch
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -901,7 +729,7 @@
         <div class="portfolio-info">
           <div class="portfolio-name">Crewcount</div>
           <div class="portfolio-tag">Maritime · Galley Management</div>
-          <p class="portfolio-desc">A crew sign-on/sign-off management system built for the superyacht industry. Fully ISM and ISPS compliant for Marshall Islands and Cayman Islands flag requirements. Includes an integrated galley management module — tracking crew numbers, visitor counts, and individual dietary requirements and allergens, so the chef knows exactly who's on board and what they need before anyone sits down.</p>
+          <p class="portfolio-desc">A crew sign-on/sign-off management system built for the superyacht industry. Built to support ISM and ISPS record-keeping, including muster lists and visitor logs, for vessels flagged in places such as the Marshall Islands and the Cayman Islands. Each vessel remains responsible for its own compliance. Includes an integrated galley management module — tracking crew numbers, visitor counts, and individual dietary requirements and allergens, so the chef knows exactly who's on board and what they need before anyone sits down.</p>
         </div>
       </a>
 
@@ -909,7 +737,7 @@
         <div class="portfolio-icon"><img src="MICASA.png" alt="MICASA"></div>
         <div class="portfolio-info">
           <div class="portfolio-name">MICASA</div>
-          <div class="portfolio-tag">Property · Development</div>
+          <div class="portfolio-tag">Property · Development · Live, private to residents</div>
           <p class="portfolio-desc">A private management platform for a residential property development in Spain. Homeowners log in to report maintenance issues and track the overall status of the development they've invested in. The management team uses it to oversee budgets, contractors, landscaping, pool maintenance, and long-term forecasting — all in one place.</p>
         </div>
       </div>
@@ -918,8 +746,9 @@
         <div class="portfolio-icon"><img src="GOLD WATCH.png" alt="Gold Watch"></div>
         <div class="portfolio-info">
           <div class="portfolio-name">Gold Watch</div>
-          <div class="portfolio-tag">Finance · Trading</div>
-          <p class="portfolio-desc">A research platform for XAU/USD traders. Gold Watch consolidates fundamental and technical analysis from across the web into a single daily briefing — market sentiment, news, swing highs and lows, and open/close signals. Built for traders who don't have time to read ten different sources before the market opens.</p>
+          <div class="portfolio-tag">Finance · Trading · In development</div>
+          <p class="portfolio-desc">A research platform for gold traders. Gold Watch brings fundamental and technical analysis from across the web into one daily briefing, with notes on the market open and close, so you can see what matters before trading starts.</p>
+          <p class="portfolio-desc" style="margin-top:0.8rem;font-size:0.78rem;opacity:0.7;"><em>Gold Watch is for research and education only. It is not financial advice, and nothing on it is a recommendation to buy or sell. Trading carries a high risk of losing money.</em></p>
         </div>
       </div>
 
@@ -1005,7 +834,7 @@
       <p class="section-label">Ownership & Payment</p>
       <h2 class="section-title">Your money is protected.<br>Your code is yours.</h2>
       <div class="divider"></div>
-      <p>Every product we build is yours. Once the project is complete, you own the code outright — no licensing fees, no lock-in, no ongoing charges from us.</p>
+      <p>On a standard build, every product is yours. Once the project is complete, you own the code outright, with no licensing fees and no lock-in. If we build an app together as a partnership, we host it and take an agreed share of subscription revenue instead. We agree which applies, in writing, before work starts.</p>
       <p style="margin-top: 1.2rem;">Payments are held in escrow via <a href="https://trullo.io" target="_blank" rel="noopener noreferrer" style="color: var(--gold); text-decoration: none;">Trullo</a> — a neutral third party that releases funds to us only once the agreed deliverables have been met. Your money is protected throughout the build.</p>
     </div>
   </section>
@@ -1029,7 +858,7 @@
       <h2 class="section-title">About Sydro</h2>
       <div class="divider"></div>
       <p>We started Sydro because AI changed what a small team can build. What used to take months and large budgets can now be scoped, designed, and delivered by a focused team working smartly — and that opens the door for businesses that would never have considered custom software before.</p>
-      <p>We work from London and Cape Town with a small team of developers on both sides. You deal directly with the people writing the code. No account managers, no handoffs, no chasing. Bring us an idea — even a rough one — and we'll send you a requirements brief, agree on a scope, and get building.</p>
+      <p>We are based in London, and our sister company, Sydro Africa, works from Cape Town, so we have a small team of developers on both sides. You deal directly with the people writing the code. No account managers, no handoffs, no chasing. Bring us an idea — even a rough one — and we'll send you a requirements brief, agree on a scope, and get building.</p>
     </div>
   </section>
 
@@ -1047,7 +876,7 @@
             <a href="mailto:info@sydro.co.uk" class="contact-detail-value" style="color:inherit;text-decoration:none;">info@sydro.co.uk</a>
           </div>
           <div class="contact-detail-item">
-            <span class="contact-detail-label">WhatsApp</span>
+            <span class="contact-detail-label">WhatsApp (messages only)</span>
             <a href="https://wa.me/34637246330" target="_blank" style="display:inline-flex; align-items:center; gap:0.55rem; color:#25D366; text-decoration:none; font-size:0.9rem; transition:opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 0C7.163 0 0 7.163 0 16c0 2.833.74 5.494 2.035 7.807L0 32l8.418-2.007A15.93 15.93 0 0 0 16 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm0 29.333a13.27 13.27 0 0 1-6.765-1.853l-.485-.288-5.002 1.193 1.234-4.866-.317-.5A13.267 13.267 0 0 1 2.667 16C2.667 8.636 8.636 2.667 16 2.667S29.333 8.636 29.333 16 23.364 29.333 16 29.333zm7.27-9.862c-.398-.199-2.354-1.162-2.719-1.294-.365-.133-.631-.199-.897.199-.266.398-1.03 1.294-1.263 1.56-.232.265-.465.298-.863.1-.398-.2-1.681-.62-3.203-1.977-1.184-1.057-1.983-2.362-2.215-2.76-.232-.398-.025-.613.174-.811.179-.178.398-.465.597-.697.199-.232.265-.398.398-.664.133-.265.066-.498-.033-.697-.1-.199-.897-2.162-1.229-2.96-.324-.778-.653-.673-.897-.686l-.764-.013c-.266 0-.697.1-1.063.498-.365.398-1.394 1.362-1.394 3.323s1.427 3.854 1.626 4.12c.199.265 2.808 4.286 6.803 6.013.951.41 1.693.655 2.271.839.954.304 1.823.261 2.51.158.765-.114 2.354-.962 2.686-1.891.332-.929.332-1.726.232-1.891-.099-.166-.365-.265-.763-.464z"/></svg>
               Click to connect
@@ -1055,7 +884,7 @@
           </div>
           <div class="contact-detail-item">
             <span class="contact-detail-label">Location</span>
-            <span class="contact-detail-value">London, United Kingdom &amp; Cape Town, South Africa</span>
+            <span class="contact-detail-value">London, United Kingdom · Our sister company, Sydro Africa (Pty) Ltd, works from Cape Town, South Africa</span>
           </div>
         </div>
       </div>
@@ -1109,6 +938,7 @@
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.3rem;">
       <div class="footer-copy">© 2026 Sydro Ltd. All rights reserved.</div>
       <a href="/privacy.html" class="footer-copy" style="color:inherit;text-decoration:none;opacity:0.6;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">Privacy Policy</a>
+      <a href="/terms.html" class="footer-copy" style="color:inherit;text-decoration:none;opacity:0.6;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">Website Terms</a>
     </div>
   </footer>
 
